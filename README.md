@@ -21,7 +21,7 @@ The CoolWriter extension includes the following features:
 
 The following are screenshots of the functions of the CoolWriter extension in different scenarios: 
 
-\!\[Smart Write\]\(assets/smart-write.png\)
+![Smart Write](./assets/smart-write.png)
 
 > Tip: Animations are a great way to showcase your extension's capabilities, and we recommend short, focused animations that users can understand quickly. 
 
