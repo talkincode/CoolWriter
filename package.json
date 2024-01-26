@@ -20,6 +20,21 @@
   ],
   "main": "./extension.js",
   "contributes": {
+    "configuration": {
+      "title": "CoolWriter Settings",
+      "properties": {
+        "coolwriter.openaiApikey": {
+          "type": "string",
+          "default": "",
+          "description": "OpenAI API key, if empty, the environment OPENAI_API_KEY will be used"
+        },
+        "coolwriter.openaiModel": {
+          "type": "string",
+          "default": "gpt-4-turbo-preview",
+          "description": "OpenAI Model, default is gpt-4-turbo-preview"
+        }
+      }
+    },
     "commands": [
       {
         "command": "coolwriter.aiwrite",

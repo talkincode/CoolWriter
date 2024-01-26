@@ -1,6 +1,27 @@
 const OpenAI = require('openai');
+const vscode = require('vscode');
 
-const openai = new OpenAI();
+/**
+ * get openai config
+ * @returns 
+ */
+function getOpenaiConfig(){
+    let config = vscode.workspace.getConfiguration('coolwriter');
+    let result = {
+        "openaiApikey" : config.get('openaiApikey'),
+        "openaiModel" : config.get('openaiModel')
+    }
+    if (!result.openaiApikey){
+        result.openaiApikey = process.env.OPENAI_API_KEY;
+    }
+    if (!result.openaiModel){
+        result.openaiModel = "gpt-4-turbo-preview";
+    }
+    return result
+}
+
+const oaicfg = getOpenaiConfig()
+const openai = new OpenAI({apiKey: oaicfg.openaiApikey});
 
 async function callOpenAIWrite(beforeText, afterText, selectedText, prompt) {
     let contextMessage = "\n----------------------------------\n" +
@@ -18,7 +39,7 @@ async function callOpenAIWrite(beforeText, afterText, selectedText, prompt) {
     ]
     const completion = await openai.chat.completions.create({
         messages: messages,
-        model: "gpt-4-turbo-preview",
+        model: oaicfg.openaiModel,
         stream: true,
     });
     return completion
@@ -37,7 +58,7 @@ async function callOpenAISummaries(selectedText, prompt) {
     ]
     const completion = await openai.chat.completions.create({
         messages: messages,
-        model: "gpt-4-turbo-preview",
+        model: oaicfg.openaiModel,
         stream: true,
     });
     return completion

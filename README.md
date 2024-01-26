@@ -1,6 +1,6 @@
-# coolwriter README
+# CoolWriter
 
-CoolWriter is a vscode-based writing extension that provides AI-assisted writing featuresCoolWriter is an intelligent writing assistant designed for writers that integrates artificial intelligence technology to enhance your writing experience in Visual Studio Code (VS Code). By understanding your writing style and habits, CoolWriter is able to provide dynamic writing suggestions, grammar corrections, and content ideas to help you get your work done faster. Its goal is to be your right-hand man in your writing process, whether it's writing a technical blog, writing an academic paper, or writing a novel. 
+CoolWriter is an intelligent writing assistant designed for writers that integrates Openai Artificial Intelligence technology to enhance your writing experience in Visual Studio Code (VS Code).CoolWriter helps you get your work done faster. Its goal is to be your right hand in the writing process, whether you're writing a technical blog, an academic paper, or a novel.
 
 ## shortcut key
 
@@ -32,6 +32,14 @@ To use the CoolWriter extension, you'll need to install the latest version of VS
 ## Extension Settings
 
 CoolWriter requires Openai APIKEY, you just need to set the system environment variable 'OPENAI_API_KEY'
+
+CoolWriter requires Openai APIKEY, you just need to set the system environment variable "OPENAI_API_KEY".
+
+You can also configure it through vscode's setup interface:
+
+> After you have modified the interface, perform a `Reload Window` operation with `ctrl+shift+p`, or restart vscode.
+
+![settings](./assets/coolwriter-settings.png)
 
 ## Known Issues
 
