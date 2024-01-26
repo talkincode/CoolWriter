@@ -2,7 +2,11 @@
 
 CoolWriter is a vscode-based writing extension that provides AI-assisted writing featuresCoolWriter is an intelligent writing assistant designed for writers that integrates artificial intelligence technology to enhance your writing experience in Visual Studio Code (VS Code). By understanding your writing style and habits, CoolWriter is able to provide dynamic writing suggestions, grammar corrections, and content ideas to help you get your work done faster. Its goal is to be your right-hand man in your writing process, whether it's writing a technical blog, writing an academic paper, or writing a novel. 
 
-CoolWriter harnesses the latest advancements in AI to
+## shortcut key
+
+`alt+w`: Prompt input box pops up, enter prompts to generate content, automatically sends context to AI
+
+`alt+s`: Select a piece of text, pop-up prompts for input, and summarize only the selected text.
 
 ## Features
 
