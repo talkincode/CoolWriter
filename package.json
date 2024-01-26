@@ -1,6 +1,6 @@
 {
   "name": "coolwriter",
-  "icon": "./assets/coolwriter.png",
+  "icon": "assets/coolwriter.png",
   "displayName": "CoolWriter",
   "description": "CoolWriter is an AI writing extension for vscode.",
   "version": "0.0.3",
