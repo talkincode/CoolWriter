@@ -3,10 +3,12 @@ const {callOpenAIWrite, callOpenAISummaries} = require('./src/coolwriter');
 
 function activate(context) {
     let channel = vscode.window.createOutputChannel('AiWriter');
+
+    // register aiwrite command
     let disposable = vscode.commands.registerCommand('coolwriter.aiwrite', async function () {
 		let cancel = false;
         const quickPick = vscode.window.createQuickPick();
-        quickPick.placeholder = '请输入提示语句';
+        quickPick.placeholder = 'Please enter a prompt';
 		quickPick.onDidHide(() => cancel = true);
         quickPick.onDidAccept(async () => {
             const value = quickPick.value;
@@ -17,9 +19,7 @@ function activate(context) {
                     let selection = editor.selection;
                     let selectedText = editor.document.getText(selection);
                     let insertPosition = selection.isEmpty ? selection.active : selection.end;
-                    // 获取选择文本之前的文本
                     let beforeText = editor.document.getText(new vscode.Range(new vscode.Position(0, 0), selection.start));
-                    // 获取选择文本之后的文本
                     let afterText = editor.document.getText(new vscode.Range(selection.end, new vscode.Position(editor.document.lineCount, 0)));
 
                     quickPick.busy = true;
@@ -49,7 +49,7 @@ function activate(context) {
 
     context.subscriptions.push(disposable);
 
-    //  注册第二个命令
+    //  register help command
     let disposable2 = vscode.commands.registerCommand('coolwriter.help', async function () {
         // vscode.window.showInputBox({ placeHolder: '请输入文本' }).then(value => {
         //     if (value !== undefined) {
@@ -68,11 +68,11 @@ function activate(context) {
 
     context.subscriptions.push(disposable2)
 
-    //  注册第三个命令
+    //  register summaries command
     let disposable3 = vscode.commands.registerCommand('coolwriter.summaries', async function () {
 		let cancel = false;
         const quickPick = vscode.window.createQuickPick();
-        quickPick.placeholder = '请输入提示语句';
+        quickPick.placeholder = 'Please enter a prompt';
 		quickPick.onDidHide(() => cancel = true);
         quickPick.onDidAccept(async () => {
             const value = quickPick.value;
@@ -131,10 +131,8 @@ function getNewPosition(originalPosition, newText) {
     let lastLineLength = lines[lines.length - 1].length;
 
     if (addedLines === 0) {
-        // 没有新行，只更新字符位置
         return originalPosition.translate(0, lastLineLength);
     } else {
-        // 有新行，更新行和字符位置
         let newLine = originalPosition.line + addedLines;
         let newChar = addedLines === 0 ? originalPosition.character + lastLineLength : lastLineLength;
         return new vscode.Position(newLine, newChar);
