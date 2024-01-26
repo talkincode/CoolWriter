@@ -1,0 +1,91 @@
+{
+  "name": "coolwriter",
+  "displayName": "CoolWriter",
+  "description": "CoolWriter is an AI writing extension for vscode.",
+  "version": "0.0.2",
+  "publisher": "JettWang",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "coolwriter.aiwrite",
+        "title": "CoolWriter AI Write",
+        "icon": {
+          "light": "./assets/icon.png",
+          "dark": "./assets/icon.png"
+        }
+      },
+      {
+        "command": "coolwriter.summaries",
+        "title": "CoolWriter Summaries",
+        "icon": {
+          "light": "./assets/icon.png",
+          "dark": "./assets/icon.png"
+        }
+      },
+      {
+        "command": "coolwriter.help",
+        "title": "CoolWriter Help",
+        "icon": {
+          "light": "./assets/icon.png",
+          "dark": "./assets/icon.png"
+        }
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "coolwriter.aiwrite",
+        "key": "alt+w",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "coolwriter.summaries",
+        "key": "alt+s",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "coolwriter.help",
+        "key": "alt+d",
+        "when": "editorTextFocus"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "coolwriter.aiwrite",
+          "group": "navigation"
+        },
+        {
+          "command": "coolwriter.summaries",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "@types/vscode": "^1.85.0",
+    "@vscode/test-cli": "^0.0.4",
+    "@vscode/test-electron": "^2.3.8",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "openai": "^4.25.0"
+  }
+}
