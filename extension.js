@@ -102,7 +102,6 @@ function activate(context) {
                         await editor.edit(editBuilder => {
                             editBuilder.insert(insertPosition, newText);
                         });
-                        // 更新 insertPosition
                         insertPosition = getNewPosition(insertPosition, newText);
                     }
 					await editor.edit(editBuilder => {
