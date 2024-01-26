@@ -6,4 +6,16 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
-- Initial release
+- Rag support
+- Langchain support
+
+## [0.0.5]
+
+- Improve Documentation
+- Enable changelog
+
+## [0.0.1]
+
+- Initial version of CoolWriter with basic AI writing features. 
+
+

@@ -37,15 +37,6 @@ CoolWriter requires Openai APIKEY, you just need to set the system environment v
 
 We are working hard to improve and will provide a better experience in the next version. 
 
-## Release Notes
-
-Users can stay up-to-date with the latest developments in the CoolWriter extension through the release notes. 
-
-### 0.0.1
-
-Initial version of CoolWriter with basic AI writing features. 
-
-
 ## Working with Markdown
 
 You can use Visual Studio Code to edit this README. Here are some useful editor keyboard shortcuts: 
