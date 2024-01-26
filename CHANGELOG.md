@@ -9,6 +9,11 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - Rag support
 - Langchain support
 
+## [0.0.6]
+
+- update ai function
+- update ai model
+
 ## [0.0.5]
 
 - Improve Documentation
