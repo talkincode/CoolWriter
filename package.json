@@ -38,7 +38,7 @@
     "commands": [
       {
         "command": "coolwriter.aiwrite",
-        "title": "CoolWriter AI Write",
+        "title": "Continue Writing",
         "icon": {
           "light": "./assets/icon.png",
           "dark": "./assets/icon.png"
@@ -46,7 +46,15 @@
       },
       {
         "command": "coolwriter.summaries",
-        "title": "CoolWriter Summaries",
+        "title": "Summarize Selected",
+        "icon": {
+          "light": "./assets/icon.png",
+          "dark": "./assets/icon.png"
+        }
+      },
+      {
+        "command": "coolwriter.genslide",
+        "title": "Create Marp Slide",
         "icon": {
           "light": "./assets/icon.png",
           "dark": "./assets/icon.png"
@@ -54,7 +62,7 @@
       },
       {
         "command": "coolwriter.help",
-        "title": "CoolWriter Help",
+        "title": "Help",
         "icon": {
           "light": "./assets/icon.png",
           "dark": "./assets/icon.png"
@@ -73,6 +81,11 @@
         "when": "editorTextFocus"
       },
       {
+        "command": "coolwriter.genslide",
+        "key": "shift+ctrl+s",
+        "when": "editorTextFocus"
+      },
+      {
         "command": "coolwriter.help",
         "key": "alt+d",
         "when": "editorTextFocus"
@@ -81,15 +94,31 @@
     "menus": {
       "editor/context": [
         {
+          "submenu": "coolwriter",
+          "group": "navigation"
+        }
+      ],
+      "coolwriter": [
+        {
           "command": "coolwriter.aiwrite",
           "group": "navigation"
         },
         {
           "command": "coolwriter.summaries",
           "group": "navigation"
+        },
+        {
+          "command": "coolwriter.genslide",
+          "group": "navigation"
         }
       ]
-    }
+    },
+    "submenus": [
+      {
+        "id": "coolwriter",
+        "label": "CoolWriter"
+      }
+    ]
   },
   "scripts": {
     "lint": "eslint .",

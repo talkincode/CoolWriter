@@ -1,5 +1,5 @@
 const vscode = require('vscode');
-const {callOpenAIWrite, callOpenAISummaries} = require('./src/coolwriter');
+const {callOpenAIWrite, callOpenAISummaries, callOpenAIGenMarpSlide} = require('./src/coolwriter');
 
 function activate(context) {
     let channel = vscode.window.createOutputChannel('AiWriter');
@@ -120,6 +120,50 @@ function activate(context) {
     });
 
     context.subscriptions.push(disposable3)
+
+    //  register summaries command
+    let disposable4 = vscode.commands.registerCommand('coolwriter.genslide', async function () {
+		let cancel = false;
+        const quickPick = vscode.window.createQuickPick();
+        quickPick.placeholder = 'Please enter a slide prompt';
+		quickPick.onDidHide(() => cancel = true);
+        quickPick.onDidAccept(async () => {
+            const value = quickPick.value;
+            let editor = vscode.window.activeTextEditor;
+            if (editor) {
+                try {
+					cancel = false;
+                    let insertPosition = new vscode.Position(0, 0); // 设置插入位置为文档开始位置
+
+                    quickPick.busy = true;
+                    const completion = await callOpenAIGenMarpSlide(value);
+                    for await (const chunk of completion) {
+                        if (cancel) {
+							console.log('Operation cancelled by the user.');
+							break;
+						}
+                        let newText = chunk.choices[0].delta.content;
+                        await editor.edit(editBuilder => {
+                            editBuilder.insert(insertPosition, newText);
+                        });
+                        insertPosition = getNewPosition(insertPosition, newText);
+                    }
+					await editor.edit(editBuilder => {
+						editBuilder.insert(insertPosition, "\n\n");
+					});
+                } catch (error) {
+                    console.error(error);
+                    vscode.window.showErrorMessage(error.message);
+                } finally {
+                    quickPick.busy = false;
+                    quickPick.hide();
+                }
+            }
+        });
+        quickPick.show();
+    });
+
+    context.subscriptions.push(disposable4)
 
 
 }
