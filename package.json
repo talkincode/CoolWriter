@@ -3,7 +3,7 @@
   "icon": "assets/coolwriter.png",
   "displayName": "CoolWriter",
   "description": "CoolWriter is an AI writing extension for vscode.",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "publisher": "JettWang",
   "engines": {
     "vscode": "^1.85.0"
