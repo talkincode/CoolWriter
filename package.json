@@ -40,32 +40,40 @@
         "command": "coolwriter.aiwrite",
         "title": "Continue Writing",
         "icon": {
-          "light": "./assets/icon.png",
-          "dark": "./assets/icon.png"
+          "light": "./assets/icon.svg",
+          "dark": "./assets/icon.svg"
         }
       },
       {
         "command": "coolwriter.summaries",
         "title": "Summarize Selected",
         "icon": {
-          "light": "./assets/icon.png",
-          "dark": "./assets/icon.png"
+          "light": "./assets/icon.svg",
+          "dark": "./assets/icon.svg"
         }
       },
       {
         "command": "coolwriter.genslide",
         "title": "Create Marp Slide",
         "icon": {
-          "light": "./assets/icon.png",
-          "dark": "./assets/icon.png"
+          "light": "./assets/icon.svg",
+          "dark": "./assets/icon.svg"
         }
       },
       {
         "command": "coolwriter.showCommands",
         "title": "CoolWriter Commands",
         "icon": {
-          "light": "./assets/icon.png",
-          "dark": "./assets/icon.png"
+          "light": "./assets/title.svg",
+          "dark": "./assets/title-dark.svg"
+        }
+      },
+      {
+        "command": "coolwriter.openExtensionSettings",
+        "title": "Open Extension Settings",
+        "icon": {
+          "light": "./assets/icon.svg",
+          "dark": "./assets/icon.svg"
         }
       }
     ],
@@ -87,7 +95,13 @@
       },
       {
         "command": "coolwriter.showCommands",
-        "key": "shift+ctrl+m"
+        "key": "shift+ctrl+m",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "coolwriter.openExtensionSettings",
+        "key": "shift+ctrl+c",
+        "when": "editorTextFocus"
       }
     ],
     "menus": {
@@ -118,6 +132,10 @@
         },
         {
           "command": "coolwriter.showCommands",
+          "group": "navigation"
+        },
+        {
+          "command": "coolwriter.openExtensionSettings",
           "group": "navigation"
         }
       ]

@@ -9,6 +9,13 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - Rag support
 - Langchain support
 
+## [0.0.7]
+
+- add editor/title button
+- add show commands feature
+- add open settings feature
+- update icons
+
 ## [0.0.6]
 
 - update ai function

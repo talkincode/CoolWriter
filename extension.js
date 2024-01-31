@@ -1,9 +1,19 @@
 const vscode = require('vscode');
 const { callOpenAIWrite, callOpenAISummaries, callOpenAIGenMarpSlide } = require('./src/coolwriter');
 
+const commands = {
+    'coolwriter.aiwrite': 'Continue Writing',
+    'coolwriter.summaries': 'Summarize Selected',
+    'coolwriter.genslide': 'Create Marp Slide',
+    'coolwriter.showCommands': 'Show Commands',
+    'extension.openExtensionSettings': 'Open Extension Settings'
+};
+
+
 function activate(context) {
     // register aiwrite command
     let disposable = vscode.commands.registerCommand('coolwriter.aiwrite', async function () {
+
         let cancel = false;
         const quickPick = vscode.window.createQuickPick();
         quickPick.placeholder = 'Please enter a prompt';
@@ -49,6 +59,7 @@ function activate(context) {
 
     //  register summaries command
     let disposable3 = vscode.commands.registerCommand('coolwriter.summaries', async function () {
+
         let cancel = false;
         const quickPick = vscode.window.createQuickPick();
         quickPick.placeholder = 'Please enter a prompt';
@@ -102,6 +113,7 @@ function activate(context) {
 
     //  register summaries command
     let disposable4 = vscode.commands.registerCommand('coolwriter.genslide', async function () {
+
         let cancel = false;
         const quickPick = vscode.window.createQuickPick();
         quickPick.placeholder = 'Please enter a slide prompt';
@@ -144,13 +156,49 @@ function activate(context) {
 
     context.subscriptions.push(disposable4)
 
-    //  register show commands command
-    let disposableSC = vscode.commands.registerCommand('coolwriter.showCommands', async function () {
-        vscode.commands.executeCommand('workbench.action.showCommands', 'coolwriter.');
+    context.subscriptions.push(vscode.commands.registerCommand('coolwriter.showCommands', async () => {
+        // 获取所有命令
+        const allCommands = await vscode.commands.getCommands(true);
+
+        // 筛选出以 'coolwriter.' 为前缀的命令
+        const filteredCommands = allCommands.filter(cmd => cmd.startsWith('coolwriter.'));
+
+        // 创建Quick Pick项
+        const quickPickItems = filteredCommands.map(cmd => ({
+            label: cmd,
+            description: commands[cmd] // 你可以添加描述来帮助用户理解命令的作用
+        }));
+
+        // 显示Quick Pick列表
+        const selected = await vscode.window.showQuickPick(quickPickItems, {
+            placeHolder: 'Select a command',
+        });
+
+        // 执行选中的命令
+        if (selected) {
+            vscode.commands.executeCommand(selected.label);
+        }
+    }));
+
+    let disposableSettings = vscode.commands.registerCommand('coolwriter.openExtensionSettings', () => {
+        vscode.commands.executeCommand('workbench.action.openSettings', 'coolwriter');
     });
 
-    context.subscriptions.push(disposableSC)
+    context.subscriptions.push(disposableSettings);
 
+    context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(e => {
+        // 检查是否是你的扩展相关的配置更改
+        if (e.affectsConfiguration('coolwriter.openaiApikey') || e.affectsConfiguration('coolwriter.openaiModel')) {
+            // 提示用户是否重新加载窗口以应用更改
+            vscode.window.showInformationMessage('Settings for "Coolwriter" have changed. Reload to apply?', 'Reload')
+                .then(selection => {
+                    if (selection === 'Reload') {
+                        // 执行重新加载窗口的命令
+                        vscode.commands.executeCommand('workbench.action.reloadWindow');
+                    }
+                });
+        }
+    }));
 }
 
 function getNewPosition(originalPosition, newText) {
