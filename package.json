@@ -31,7 +31,19 @@
         "coolwriter.openaiModel": {
           "type": "string",
           "default": "gpt-4-turbo-preview",
-          "description": "OpenAI Model, default is gpt-4-turbo-preview"
+          "description": "Select the OpenAI model to use for generating text. The default model is GPT-4 Turbo Preview.",
+          "enum": [
+            "gpt-3.5-turbo",
+            "gpt-3.5-turbo-16k",
+            "gpt-3.5-turbo-1106",
+            "gpt-4-turbo-preview"
+          ],
+          "enumDescriptions": [
+            "GPT-3.5 Turbo: Optimized for fast responses and general use cases.",
+            "GPT-3.5 Turbo-16K: Similar to GPT-3.5 Turbo but supports longer context up to 16K tokens, suitable for more detailed interactions.",
+            "GPT-3.5 Turbo-1106: A specialized variant of GPT-3.5 Turbo designed for specific use cases requiring unique response characteristics.",
+            "GPT-4 Turbo Preview: The latest generation model offering advanced understanding and creativity, optimized for performance."
+          ]
         }
       }
     },
