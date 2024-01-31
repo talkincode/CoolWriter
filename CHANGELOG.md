@@ -15,6 +15,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - add show commands feature
 - add open settings feature
 - update icons
+- auto reload windows when configuration changes
 
 ## [0.0.6]
 
