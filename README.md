@@ -8,6 +8,8 @@ CoolWriter is an intelligent writing assistant designed for writers that integra
 
 `alt+s`: Select a piece of text, pop-up prompts for input, and summarize only the selected text.
 
+`shift+ctrl+s`: Pop-up prompt entry box to enter prompts to generate Marp Slide
+
 ## Features
 
 The CoolWriter extension includes the following features: 
@@ -21,9 +23,13 @@ The CoolWriter extension includes the following features:
 
 The following are screenshots of the functions of the CoolWriter extension in different scenarios: 
 
+- smart writing
+
 ![Smart Write](./assets/smart-write.png)
 
-> Tip: Animations are a great way to showcase your extension's capabilities, and we recommend short, focused animations that users can understand quickly. 
+- create marp slide
+
+![Smart Write](./assets/coolwriter-marp-slide.png)
 
 ## Requirements
 

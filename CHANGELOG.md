@@ -13,6 +13,8 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 - update ai function
 - update ai model
+- update context menus
+- add marp slide support
 
 ## [0.0.5]
 

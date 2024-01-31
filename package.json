@@ -61,8 +61,8 @@
         }
       },
       {
-        "command": "coolwriter.help",
-        "title": "Help",
+        "command": "coolwriter.showCommands",
+        "title": "CoolWriter Commands",
         "icon": {
           "light": "./assets/icon.png",
           "dark": "./assets/icon.png"
@@ -86,15 +86,20 @@
         "when": "editorTextFocus"
       },
       {
-        "command": "coolwriter.help",
-        "key": "alt+d",
-        "when": "editorTextFocus"
+        "command": "coolwriter.showCommands",
+        "key": "shift+ctrl+m"
       }
     ],
     "menus": {
       "editor/context": [
         {
           "submenu": "coolwriter",
+          "group": "navigation"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "coolwriter.showCommands",
           "group": "navigation"
         }
       ],
@@ -109,6 +114,10 @@
         },
         {
           "command": "coolwriter.genslide",
+          "group": "navigation"
+        },
+        {
+          "command": "coolwriter.showCommands",
           "group": "navigation"
         }
       ]
