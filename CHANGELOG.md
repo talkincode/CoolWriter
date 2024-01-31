@@ -9,6 +9,10 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - Rag support
 - Langchain support
 
+## [0.0.8]
+
+- configuration update
+
 ## [0.0.7]
 
 - add editor/title button
