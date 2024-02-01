@@ -3,7 +3,7 @@
   "icon": "assets/coolwriter.png",
   "displayName": "CoolWriter",
   "description": "CoolWriter is an AI writing extension for vscode.",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "publisher": "JettWang",
   "engines": {
     "vscode": "^1.85.0"
@@ -58,7 +58,7 @@
       },
       {
         "command": "coolwriter.summaries",
-        "title": "Summarize Selected",
+        "title": "Summarize selection",
         "icon": {
           "light": "./assets/icon.svg",
           "dark": "./assets/icon.svg"
@@ -73,8 +73,24 @@
         }
       },
       {
+        "command": "coolwriter.notelist",
+        "title": "Open Note List",
+        "icon": {
+          "light": "./assets/icon.svg",
+          "dark": "./assets/icon.svg"
+        }
+      },
+      {
+        "command": "coolwriter.addNote",
+        "title": "Add to notelist",
+        "icon": {
+          "light": "./assets/icon.svg",
+          "dark": "./assets/icon.svg"
+        }
+      },
+      {
         "command": "coolwriter.showCommands",
-        "title": "CoolWriter Commands",
+        "title": "Show command list",
         "icon": {
           "light": "./assets/title.svg",
           "dark": "./assets/title-dark.svg"
@@ -98,12 +114,22 @@
       {
         "command": "coolwriter.summaries",
         "key": "alt+s",
-        "when": "editorTextFocus"
+        "when": "editorHasSelection"
       },
       {
         "command": "coolwriter.genslide",
         "key": "shift+ctrl+s",
         "when": "editorTextFocus"
+      },
+      {
+        "command": "coolwriter.notelist",
+        "key": "shift+ctrl+o",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "coolwriter.addNote",
+        "key": "shift+ctrl+n",
+        "when": "editorHasSelection"
       },
       {
         "command": "coolwriter.showCommands",
@@ -121,6 +147,15 @@
         {
           "submenu": "coolwriter",
           "group": "navigation"
+        },
+        {
+          "command": "coolwriter.addNote",
+          "group": "navigation"
+        },
+        {
+          "command": "coolwriter.summaries",
+          "group": "navigation",
+          "when": "editorHasSelection"
         }
       ],
       "editor/title": [
@@ -136,11 +171,21 @@
         },
         {
           "command": "coolwriter.summaries",
-          "group": "navigation"
+          "group": "navigation",
+          "when": "editorHasSelection"
         },
         {
           "command": "coolwriter.genslide",
           "group": "navigation"
+        },
+        {
+          "command": "coolwriter.notelist",
+          "group": "navigation"
+        },
+        {
+          "command": "coolwriter.addNote",
+          "group": "navigation",
+          "when": "editorHasSelection"
         },
         {
           "command": "coolwriter.showCommands",
