@@ -168,8 +168,11 @@ function activate(context) {
 
     let notelist;
     let initNoteList = () => {
-        if (!notelist) {
+        if (!notelist || notelist.disposed) {
             notelist = getNoteList(context);
+            notelist.onDidDispose(() => {
+                notelist = null;
+            });
             notelist.webview.onDidReceiveMessage(
                 message => {
                     console.log(message);
@@ -208,6 +211,7 @@ function activate(context) {
                 undefined,
                 context.subscriptions
             );
+            notelist.reveal(vscode.ViewColumn.Beside);
         }
     };
 
@@ -217,7 +221,6 @@ function activate(context) {
     ////////////////////////////////////////////////////////////////
     let disposableNotelist = vscode.commands.registerCommand('coolwriter.notelist', function () {
         initNoteList()
-        notelist.reveal(vscode.ViewColumn.Beside);
     });
 
     context.subscriptions.push(disposableNotelist);
@@ -227,7 +230,6 @@ function activate(context) {
     ////////////////////////////////////////////////////////////////
     let disposableAddNote = vscode.commands.registerCommand('coolwriter.addNote', function () {
         initNoteList()
-        notelist.reveal(vscode.ViewColumn.Beside);
         let editor = vscode.window.activeTextEditor;
         if (editor) {
             let document = editor.document;
