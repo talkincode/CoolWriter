@@ -4,7 +4,7 @@ const path = require('path');
 
 function getNoteList(context) {
     let panel = vscode.window.createWebviewPanel(
-        'list', // viewType
+        'notelist', // viewType
         'Notelist', // title
         vscode.ViewColumn.Beside, // show in new column
         { enableScripts: true } // options
