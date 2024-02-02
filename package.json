@@ -44,6 +44,16 @@
             "GPT-3.5 Turbo-1106: A specialized variant of GPT-3.5 Turbo designed for specific use cases requiring unique response characteristics.",
             "GPT-4 Turbo Preview: The latest generation model offering advanced understanding and creativity, optimized for performance."
           ]
+        },
+        "coolwriter.teamsgptApiEndpoint": {
+          "type": "string",
+          "default": "https://api.teamsgpt.net",
+          "description": "TeamsGPT API endpoint, if empty, the environment TEAMSGPT_API_ENDPOINT will be used"
+        },
+        "coolwriter.teamsgptApiToken": {
+          "type": "string",
+          "default": "",
+          "description": "TeamsGPT API token, if empty, the environment TEAMSGPT_API_TOKEN will be used"
         }
       }
     },

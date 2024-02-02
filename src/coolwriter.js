@@ -3,7 +3,7 @@ const vscode = require('vscode');
 
 /**
  * get openai config
- * @returns 
+ * @returns {Object} - The OpenAI configuration object containing the API key and model.
  */
 function getOpenaiConfig(){
     let config = vscode.workspace.getConfiguration('coolwriter');
@@ -20,9 +20,30 @@ function getOpenaiConfig(){
     return result
 }
 
+/**
+ * get teamsgpt config
+ * @returns {Object} - The teamsgpt configuration object containing the API endpoint and token.
+ */
+function getTeamsgptConfig(){
+    let config = vscode.workspace.getConfiguration('coolwriter');
+    let result = {
+        "teamsgptApiEndpoint" : config.get('teamsgptApiEndpoint'),
+        "teamsgptApiToken" : config.get('teamsgptApiToken')
+    }
+    return result
+}
+
 const oaicfg = getOpenaiConfig()
 const openai = new OpenAI({apiKey: oaicfg.openaiApikey});
 
+/**
+ * Call OpenAI to generate content based on the provided context and prompt.
+ * @param {string} beforeText - The text before the selected text.
+ * @param {string} afterText - The text after the selected text.
+ * @param {string} selectedText - The selected text.
+ * @param {string} prompt - The prompt for generating content.
+ * @returns {Promise<Object>} - The completion object returned by OpenAI.
+ */
 async function callOpenAIWrite(beforeText, afterText, selectedText, prompt) {
     let contextMessage = "\n----------------------------------\n" +
         beforeText +
@@ -45,7 +66,12 @@ async function callOpenAIWrite(beforeText, afterText, selectedText, prompt) {
     return completion
 }
 
-
+/**
+ * Call OpenAI to generate summaries based on the provided selected text and prompt.
+ * @param {string} selectedText - The selected text.
+ * @param {string} prompt - The prompt for generating summaries.
+ * @returns {Promise<Object>} - The completion object returned by OpenAI.
+ */
 async function callOpenAISummaries(selectedText, prompt) {
     let contextMessage = "\n----------------------------------\n" +
         selectedText +
@@ -64,6 +90,11 @@ async function callOpenAISummaries(selectedText, prompt) {
     return completion
 }
 
+/**
+ * Call OpenAI to generate a Marp slide based on the provided prompt.
+ * @param {string} prompt - The prompt for generating the Marp slide.
+ * @returns {Promise<Object>} - The completion object returned by OpenAI.
+ */
 async function callOpenAIGenMarpSlide(prompt) {
     let messages = [
         {
@@ -134,6 +165,7 @@ Thank You!
     return completion
 }
 
+const teamsgptcfg = getTeamsgptConfig()
 
 module.exports = {
     callOpenAIWrite,

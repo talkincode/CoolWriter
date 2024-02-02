@@ -176,7 +176,7 @@ function activate(context) {
             notelist.webview.onDidReceiveMessage(
                 message => {
                     console.log(message);
-                    let notes = context.workspaceState.get('notes', []);
+                    let notes = context.globalState.get('coolwriter.notes', []);
                     switch (message.command) {
                         case 'insertNoteContentIntoActiveEditor':
                             insertNoteContentIntoActiveEditor(message.content);
@@ -203,8 +203,8 @@ function activate(context) {
                         case 'deleteNote':
                             // 删除指定的 note
                             notes = notes.filter(note => note.id !== message.id);
-                            // 保存 notes 到 workspaceState
-                            context.workspaceState.update('notes', notes);
+                            // 保存 notes 到 globalState
+                            context.globalState.update('coolwriter.notes', notes);
                             break;
                     }
                 },
@@ -241,9 +241,9 @@ function activate(context) {
                 title: getTitleFromText(text),
                 content: text,
             }
-            let notes = context.workspaceState.get('notes', []);
+            let notes = context.globalState.get('coolwriter.notes', []);
             notes.push(note);
-            context.workspaceState.update('notes', notes);
+            context.globalState.update('coolwriter.notes', notes);
             notelist.webview.postMessage({
                 command: 'coolwriter.addNote',
                 note: note,
