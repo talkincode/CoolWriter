@@ -20,6 +20,19 @@
   ],
   "main": "./extension.js",
   "contributes": {
+    "localizations": [
+      {
+        "languageId": "zh-cn",
+        "languageName": "Simplified Chinese",
+        "localizedLanguageName": "简体中文",
+        "translations": [
+          {
+            "id": "package.nls",
+            "path": "./package.nls.zh-cn.json"
+          }
+        ]
+      }
+    ],
     "configuration": {
       "title": "CoolWriter Settings",
       "properties": {
@@ -60,7 +73,7 @@
     "commands": [
       {
         "command": "coolwriter.aiwrite",
-        "title": "Continue Writing",
+        "title": "%aiwrite.command.title%",
         "icon": {
           "light": "./assets/icon.svg",
           "dark": "./assets/icon.svg"
@@ -68,7 +81,7 @@
       },
       {
         "command": "coolwriter.summaries",
-        "title": "Summarize selection",
+        "title": "%summaries.command.title%",
         "icon": {
           "light": "./assets/icon.svg",
           "dark": "./assets/icon.svg"
@@ -76,7 +89,7 @@
       },
       {
         "command": "coolwriter.genslide",
-        "title": "Create Marp Slide",
+        "title": "%genslide.command.title%",
         "icon": {
           "light": "./assets/icon.svg",
           "dark": "./assets/icon.svg"
@@ -84,7 +97,7 @@
       },
       {
         "command": "coolwriter.notelist",
-        "title": "Open Note List",
+        "title": "%notelist.command.title%",
         "icon": {
           "light": "./assets/icon.svg",
           "dark": "./assets/icon.svg"
@@ -92,7 +105,7 @@
       },
       {
         "command": "coolwriter.addNote",
-        "title": "Add to notelist",
+        "title": "%addNote.command.title%",
         "icon": {
           "light": "./assets/icon.svg",
           "dark": "./assets/icon.svg"
@@ -100,7 +113,7 @@
       },
       {
         "command": "coolwriter.showCommands",
-        "title": "Show command list",
+        "title": "%showCommands.command.title%",
         "icon": {
           "light": "./assets/title.svg",
           "dark": "./assets/title-dark.svg"
@@ -108,7 +121,7 @@
       },
       {
         "command": "coolwriter.openExtensionSettings",
-        "title": "Open Extension Settings",
+        "title": "%openExtensionSettings.command.title%",
         "icon": {
           "light": "./assets/icon.svg",
           "dark": "./assets/icon.svg"
@@ -229,6 +242,7 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "openai": "^4.25.0"
+    "openai": "^4.25.0",
+    "vscode-nls": "^5.2.0"
   }
 }

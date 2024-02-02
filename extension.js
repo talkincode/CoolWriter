@@ -2,15 +2,17 @@ const vscode = require('vscode');
 const crypto = require('crypto');
 const { callOpenAIWrite, callOpenAISummaries, callOpenAIGenMarpSlide } = require('./src/coolwriter');
 const { getNoteList } = require("./src/notelist")
+const nls = require('vscode-nls');
+const localize = nls.config({ messageFormat: nls.MessageFormat.file })();
 
 const commands = {
-    'coolwriter.aiwrite': 'Continue writing',
-    'coolwriter.summaries': 'Summarize selected',
-    'coolwriter.genslide': 'Create marp slide',
-    'coolwriter.notelist': 'Open note list',
-    'coolwriter.addNote': 'Add to note list',
-    'coolwriter.showCommands': 'Show extension commands',
-    'coolwriter.openExtensionSettings': 'Open extension settings'
+    'coolwriter.aiwrite': localize('aiwrite.command.title', "Continue writing"),
+    'coolwriter.summaries': localize('summaries.command.title', "Summarize selection"),
+    'coolwriter.genslide': localize('genslide.command.title', "Create marp slide"),
+    'coolwriter.notelist': localize('notelist.command.title', "Open note list"),
+    'coolwriter.addNote': localize('addNote.command.title', "Add to note list"),
+    'coolwriter.showCommands': localize('showCommands.command.title', "Show extension commands"),
+    'coolwriter.openExtensionSettings': localize('openExtensionSettings.command.title', "Open extension settings"),
 };
 
 
