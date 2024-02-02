@@ -12,6 +12,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ## [0.0.9]
 
 - fix notelist open bug
+- Internationalization Support Chinese
 
 ## [0.0.8]
 
