@@ -9,6 +9,10 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - Rag support
 - Langchain support
 
+## [0.1.0]
+
+- Attach notes as context when writing
+
 ## [0.0.9]
 
 - fix notelist open bug

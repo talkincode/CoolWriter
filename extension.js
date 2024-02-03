@@ -24,10 +24,21 @@ function activate(context) {
 
         let cancel = false;
         const quickPick = vscode.window.createQuickPick();
+        const withNoteLabel = "Writing with note"
         quickPick.placeholder = 'Please enter a prompt';
+        quickPick.canSelectMany = true; // 允许多选
+        quickPick.items = [
+            { label: withNoteLabel, alwaysShow: true } // 特殊项用于确认选择
+        ];
+
         quickPick.onDidHide(() => cancel = true);
         quickPick.onDidAccept(async () => {
+            let withNote = quickPick.selectedItems.find(item => item.label == withNoteLabel) !== undefined;
             const value = quickPick.value;
+            let notes = []
+            if (withNote) {
+                notes = context.globalState.get('coolwriter.notes', []);
+            }
             let editor = vscode.window.activeTextEditor;
             if (editor) {
                 try {
@@ -39,7 +50,7 @@ function activate(context) {
                     let afterText = editor.document.getText(new vscode.Range(selection.end, new vscode.Position(editor.document.lineCount, 0)));
 
                     quickPick.busy = true;
-                    const completion = await callOpenAIWrite(beforeText, afterText, selectedText, value);
+                    const completion = await callOpenAIWrite(beforeText, afterText, selectedText, value, notes);
                     for await (const chunk of completion) {
                         if (cancel) {
                             console.log('Operation cancelled by the user.');
@@ -267,18 +278,19 @@ function activate(context) {
 
         // 创建Quick Pick项
         const quickPickItems = filteredCommands.map(cmd => ({
-            label: cmd,
-            description: commands[cmd] // 你可以添加描述来帮助用户理解命令的作用
+            label: commands[cmd],
+            description:  cmd// 你可以添加描述来帮助用户理解命令的作用
         }));
 
         // 显示Quick Pick列表
         const selected = await vscode.window.showQuickPick(quickPickItems, {
+            title: "CoolWriter Commands",
             placeHolder: 'Select a command',
         });
 
         // 执行选中的命令
         if (selected) {
-            vscode.commands.executeCommand(selected.label);
+            vscode.commands.executeCommand(selected.description);
         }
     }));
 

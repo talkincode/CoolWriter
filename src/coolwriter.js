@@ -42,28 +42,41 @@ const openai = new OpenAI({apiKey: oaicfg.openaiApikey});
  * @param {string} afterText - The text after the selected text.
  * @param {string} selectedText - The selected text.
  * @param {string} prompt - The prompt for generating content.
+ * @param {string} notes - The notes for generating content.
  * @returns {Promise<Object>} - The completion object returned by OpenAI.
  */
-async function callOpenAIWrite(beforeText, afterText, selectedText, prompt) {
-    let contextMessage = "\n----------------------------------\n" +
-        beforeText +
-        selectedText +
-        '\n<Generate content>\n' +
-        afterText +
-        "\n----------------------------------\n";
+async function callOpenAIWrite(beforeText, afterText, selectedText, prompt, notes) {
+    let contextMessage = `
+----------------------------------
+${beforeText}${selectedText}
+<Generate content>
+${afterText}
+----------------------------------
+
+`;
+
+    let noteMessages = "";
+    if (notes){
+        noteMessages = "The following is additional contextual information, please refer to it when generating content:\n\n";
+        for (let note of notes){
+            noteMessages += `${note.content}\n\n`;
+        }
+    }
     let messages = [
         {
-            role: "system", content: "You are an intelligent writing assistant, now working on the following article, \
+            role: "system", 
+            content: `You are an intelligent writing assistant, now working on the following content, \
             Please complete the <Generate content> section, taking care to refer to the context \
-            and not generating redundant content:\n" + contextMessage },
+            and not generating redundant content:\n${contextMessage}${noteMessages}`
+        },
         { role: "user", content: prompt},
-    ]
+    ];
     const completion = await openai.chat.completions.create({
         messages: messages,
         model: oaicfg.openaiModel,
         stream: true,
     });
-    return completion
+    return completion;
 }
 
 /**

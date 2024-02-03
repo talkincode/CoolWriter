@@ -230,7 +230,8 @@
   "scripts": {
     "lint": "eslint .",
     "pretest": "npm run lint",
-    "test": "vscode-test"
+    "test": "vscode-test",
+    "vscode:prepublish": "nls.bundle package.nls.json"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.6",
