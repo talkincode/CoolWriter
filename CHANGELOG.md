@@ -9,7 +9,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - Rag support
 - Langchain support
 
-## [0.1.0]
+## [0.0.10]
 
 - Attach notes as context when writing
 - Support writing style
