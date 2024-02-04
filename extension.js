@@ -25,10 +25,14 @@ function activate(context) {
         let cancel = false;
         const quickPick = vscode.window.createQuickPick();
         const withNoteLabel = "Writing with note"
+        const feynmanStyle = "Writing Style: Sharp, Humorous, Insightful, Rebellious"
+        const xiaoboStyle = "Writing Style: Intuitive, Humorous, Passionate, Creative"
         quickPick.placeholder = 'Please enter a prompt';
         quickPick.canSelectMany = true; // 允许多选
         quickPick.items = [
-            { label: withNoteLabel, alwaysShow: true } // 特殊项用于确认选择
+            { label: withNoteLabel, alwaysShow: true }, // 特殊项用于确认选择
+            { label: feynmanStyle, alwaysShow: true }, // 费曼风格：直观，幽默，激情
+            { label: xiaoboStyle, alwaysShow: true } // 王小波风格：犀利，幽默，深刻
         ];
 
         quickPick.onDidHide(() => cancel = true);
@@ -39,6 +43,15 @@ function activate(context) {
             if (withNote) {
                 notes = context.globalState.get('coolwriter.notes', []);
             }
+            
+            let writeStyle = ""
+            if (quickPick.selectedItems.find(item => item.label == feynmanStyle) !== undefined) {
+                writeStyle = feynmanStyle
+            }
+            if (quickPick.selectedItems.find(item => item.label == xiaoboStyle) !== undefined) {
+                writeStyle = xiaoboStyle
+            }
+
             let editor = vscode.window.activeTextEditor;
             if (editor) {
                 try {
@@ -47,10 +60,12 @@ function activate(context) {
                     let selectedText = editor.document.getText(selection);
                     let insertPosition = selection.isEmpty ? selection.active : selection.end;
                     let beforeText = editor.document.getText(new vscode.Range(new vscode.Position(0, 0), selection.start));
-                    let afterText = editor.document.getText(new vscode.Range(selection.end, new vscode.Position(editor.document.lineCount, 0)));
+                    let afterText = editor.document.getText(new vscode.Range(
+                        selection.end, new vscode.Position(editor.document.lineCount, 0)
+                    ));
 
                     quickPick.busy = true;
-                    const completion = await callOpenAIWrite(beforeText, afterText, selectedText, value, notes);
+                    const completion = await callOpenAIWrite(beforeText, afterText, selectedText, value, notes, writeStyle);
                     for await (const chunk of completion) {
                         if (cancel) {
                             console.log('Operation cancelled by the user.');
@@ -279,7 +294,7 @@ function activate(context) {
         // 创建Quick Pick项
         const quickPickItems = filteredCommands.map(cmd => ({
             label: commands[cmd],
-            description:  cmd// 你可以添加描述来帮助用户理解命令的作用
+            description: cmd// 你可以添加描述来帮助用户理解命令的作用
         }));
 
         // 显示Quick Pick列表

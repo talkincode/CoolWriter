@@ -45,7 +45,7 @@ const openai = new OpenAI({apiKey: oaicfg.openaiApikey});
  * @param {string} notes - The notes for generating content.
  * @returns {Promise<Object>} - The completion object returned by OpenAI.
  */
-async function callOpenAIWrite(beforeText, afterText, selectedText, prompt, notes) {
+async function callOpenAIWrite(beforeText, afterText, selectedText, prompt, notes, writeStyle) {
     let contextMessage = `
 ----------------------------------
 ${beforeText}${selectedText}
@@ -62,11 +62,16 @@ ${afterText}
             noteMessages += `${note.content}\n\n`;
         }
     }
+
+    if (writeStyle){
+        writeStyle = "Pay attention to the " + writeStyle + ".";
+    }
+
     let messages = [
         {
             role: "system", 
             content: `You are an intelligent writing assistant, now working on the following content, \
-            Please complete the <Generate content> section, taking care to refer to the context \
+            Please complete the <Generate content> section, ${writeStyle}\ntaking care to refer to the context \
             and not generating redundant content:\n${contextMessage}${noteMessages}`
         },
         { role: "user", content: prompt},

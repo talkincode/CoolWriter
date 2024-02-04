@@ -13,7 +13,12 @@
     "url": "https://github.com/talkincode/CoolWriter.git"
   },
   "categories": [
-    "Other"
+    "Other",
+    "Education",
+    "Programming Languages"
+  ],
+  "extensionDependencies": [
+    "marp-team.marp-vscode"
   ],
   "activationEvents": [
     "onStartupFinished"

@@ -12,6 +12,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ## [0.1.0]
 
 - Attach notes as context when writing
+- Support writing style
 
 ## [0.0.9]
 
