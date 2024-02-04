@@ -13,7 +13,6 @@
     "url": "https://github.com/talkincode/CoolWriter.git"
   },
   "categories": [
-    "Other",
     "Education",
     "Programming Languages"
   ],
@@ -24,9 +23,6 @@
     "onStartupFinished"
   ],
   "main": "./extension.js",
-  "browser": {
-    "./extension.js": "./extension.js"
-  },
   "contributes": {
     "localizations": [
       {
