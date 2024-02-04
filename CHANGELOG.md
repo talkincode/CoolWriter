@@ -9,7 +9,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - Rag support
 - Langchain support
 
-## [0.0.12]
+## [0.0.13]
 
 - Web support
 
