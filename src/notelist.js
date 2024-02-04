@@ -1,4 +1,3 @@
-
 const vscode = require('vscode');
 
 function getNoteList(context) {
