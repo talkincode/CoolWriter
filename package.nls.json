@@ -1,5 +1,6 @@
 {
     "aiwrite.command.title": "Continue Writing",
+    "coding.command.title": "Smart Coding",
     "summaries.command.title": "Summarize selection",
     "genslide.command.title": "Create Marp Slide",
     "notelist.command.title": "Open Note List",

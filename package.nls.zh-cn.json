@@ -1,5 +1,6 @@
 {
-    "aiwrite.command.title": "AI智能写作",
+    "aiwrite.command.title": "AI 智能写作",
+    "coding.command.title": "AI 智能编程",
     "summaries.command.title": "摘要选中内容",
     "genslide.command.title": "创建 Marp 幻灯片",
     "notelist.command.title": "打开笔记列表",

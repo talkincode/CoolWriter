@@ -85,6 +85,51 @@ ${afterText}
 }
 
 /**
+ * Call OpenAI to generate code based on the provided context and prompt.
+ * @param {string} beforeText - The text before the selected text.
+ * @param {string} afterText - The text after the selected text.
+ * @param {string} selectedText - The selected text.
+ * @param {string} prompt - The prompt for generating content.
+ * @param {string} notes - The notes for generating content.
+ * @returns {Promise<Object>} - The completion object returned by OpenAI.
+ */
+async function callOpenAICoding(beforeText, afterText, selectedText, prompt, notes) {
+    let contextMessage = `
+----------------------------------
+${beforeText}${selectedText}
+<Generate code>
+${afterText}
+----------------------------------
+
+`;
+
+    let noteMessages = "";
+    if (notes){
+        noteMessages = "The following is additional contextual information, please refer to it when generating code:\n\n";
+        for (let note of notes){
+            noteMessages += `${note.content}\n\n`;
+        }
+    }
+
+    let messages = [
+        {
+            role: "system", 
+            content: `You are a super-intelligent programming assistant who specializes in writing logical, \
+            concise and efficient program code, and you are developing the code for the following applications, \
+            Please complete the <Generate code> section, Note that only pure code is generated, don't wrap code in backquotes!\
+            taking care to refer to the context and not generating redundant content:\n${contextMessage}${noteMessages}`
+        },
+        { role: "user", content: prompt},
+    ];
+    const completion = await openai.chat.completions.create({
+        messages: messages,
+        model: oaicfg.openaiModel,
+        stream: true,
+    });
+    return completion;
+}
+
+/**
  * Call OpenAI to generate summaries based on the provided selected text and prompt.
  * @param {string} selectedText - The selected text.
  * @param {string} prompt - The prompt for generating summaries.
@@ -199,6 +244,7 @@ const teamsgptcfg = getTeamsgptConfig()
 
 module.exports = {
     callOpenAIWrite,
+    callOpenAICoding,
     callOpenAISummaries,
     callOpenAIGenMarpSlide
 };

@@ -85,6 +85,14 @@
         }
       },
       {
+        "command": "coolwriter.coding",
+        "title": "%coding.command.title%",
+        "icon": {
+          "light": "./assets/icon.svg",
+          "dark": "./assets/icon.svg"
+        }
+      },
+      {
         "command": "coolwriter.summaries",
         "title": "%summaries.command.title%",
         "icon": {
@@ -140,6 +148,11 @@
         "when": "editorTextFocus"
       },
       {
+        "command": "coolwriter.coding",
+        "key": "alt+c",
+        "when": "editorTextFocus"
+      },
+      {
         "command": "coolwriter.summaries",
         "key": "alt+s",
         "when": "editorHasSelection"
@@ -173,17 +186,21 @@
     "menus": {
       "editor/context": [
         {
-          "submenu": "coolwriter",
-          "group": "navigation"
+          "command": "coolwriter.coding",
+          "group": "coolwriterGroup"
         },
         {
           "command": "coolwriter.addNote",
-          "group": "navigation"
+          "group": "coolwriterGroup"
         },
         {
           "command": "coolwriter.summaries",
-          "group": "navigation",
+          "group": "coolwriterGroup",
           "when": "editorHasSelection"
+        },
+        {
+          "submenu": "coolwriter",
+          "group": "coolwriterGroup"
         }
       ],
       "editor/title": [
@@ -195,6 +212,10 @@
       "coolwriter": [
         {
           "command": "coolwriter.aiwrite",
+          "group": "navigation"
+        },
+        {
+          "command": "coolwriter.coding",
           "group": "navigation"
         },
         {

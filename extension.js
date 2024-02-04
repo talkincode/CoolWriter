@@ -1,12 +1,18 @@
 const vscode = require('vscode');
 const crypto = require('crypto');
-const { callOpenAIWrite, callOpenAISummaries, callOpenAIGenMarpSlide } = require('./src/coolwriter');
+const { 
+    callOpenAIWrite, 
+    callOpenAICoding, 
+    callOpenAISummaries, 
+    callOpenAIGenMarpSlide 
+} = require('./src/coolwriter');
 const { getNoteList } = require("./src/notelist")
 const nls = require('vscode-nls');
 const localize = nls.config({ messageFormat: nls.MessageFormat.file })();
 
 const commands = {
     'coolwriter.aiwrite': localize('aiwrite.command.title', "Continue writing"),
+    'coolwriter.coding': localize('coding.command.title', "Smart coding"),
     'coolwriter.summaries': localize('summaries.command.title', "Summarize selection"),
     'coolwriter.genslide': localize('genslide.command.title', "Create marp slide"),
     'coolwriter.notelist': localize('notelist.command.title', "Open note list"),
@@ -27,7 +33,7 @@ function activate(context) {
         const withNoteLabel = "Writing with note"
         const feynmanStyle = "Writing Style: Sharp, Humorous, Insightful, Rebellious"
         const xiaoboStyle = "Writing Style: Intuitive, Humorous, Passionate, Creative"
-        quickPick.placeholder = 'Please enter a prompt';
+        quickPick.placeholder = 'Please enter a writing prompt';
         quickPick.canSelectMany = true; // 允许多选
         quickPick.items = [
             { label: withNoteLabel, alwaysShow: true }, // 特殊项用于确认选择
@@ -90,6 +96,69 @@ function activate(context) {
     });
 
     context.subscriptions.push(disposable);
+
+    ////////////////////////////////////////////////////////////////
+    // register coding command
+    ////////////////////////////////////////////////////////////////
+    let disposableCoding = vscode.commands.registerCommand('coolwriter.coding', async function () {
+
+        let cancel = false;
+        const quickPick = vscode.window.createQuickPick();
+        const withNoteLabel = "Coding with note"
+        quickPick.placeholder = 'Please enter a coding prompt';
+        quickPick.canSelectMany = true; // 允许多选
+        quickPick.items = [
+            { label: withNoteLabel, alwaysShow: true }, // 特殊项用于确认选择
+        ];
+
+        quickPick.onDidHide(() => cancel = true);
+        quickPick.onDidAccept(async () => {
+            let withNote = quickPick.selectedItems.find(item => item.label == withNoteLabel) !== undefined;
+            const value = quickPick.value;
+            let notes = []
+            if (withNote) {
+                notes = context.globalState.get('coolwriter.notes', []);
+            }
+        
+
+            let editor = vscode.window.activeTextEditor;
+            if (editor) {
+                try {
+                    cancel = false;
+                    let selection = editor.selection;
+                    let selectedText = editor.document.getText(selection);
+                    let insertPosition = selection.isEmpty ? selection.active : selection.end;
+                    let beforeText = editor.document.getText(new vscode.Range(new vscode.Position(0, 0), selection.start));
+                    let afterText = editor.document.getText(new vscode.Range(
+                        selection.end, new vscode.Position(editor.document.lineCount, 0)
+                    ));
+
+                    quickPick.busy = true;
+                    const completion = await callOpenAICoding(beforeText, afterText, selectedText, value, notes);
+                    for await (const chunk of completion) {
+                        if (cancel) {
+                            console.log('Operation cancelled by the user.');
+                            break;
+                        }
+                        let newText = chunk.choices[0].delta.content;
+                        await editor.edit(editBuilder => {
+                            editBuilder.insert(insertPosition, newText);
+                        });
+                        insertPosition = getNewPosition(insertPosition, newText);
+                    }
+                } catch (error) {
+                    console.error(error);
+                    vscode.window.showErrorMessage(error.message);
+                } finally {
+                    quickPick.busy = false;
+                    quickPick.hide();
+                }
+            }
+        });
+        quickPick.show();
+    });
+
+    context.subscriptions.push(disposableCoding);
 
     ////////////////////////////////////////////////////////////////
     //  register summaries command
