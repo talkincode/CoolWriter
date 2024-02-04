@@ -113,7 +113,16 @@ async function callOpenAISummaries(selectedText, prompt) {
  * @param {string} prompt - The prompt for generating the Marp slide.
  * @returns {Promise<Object>} - The completion object returned by OpenAI.
  */
-async function callOpenAIGenMarpSlide(prompt) {
+async function callOpenAIGenMarpSlide(prompt, notes) {
+    let noteMessages = "";
+    if (notes){
+        noteMessages = "---------------------\n\
+        The following is additional contextual information, please refer to it when generating content:\n\n";
+        for (let note of notes){
+            noteMessages += `${note.content}\n\n`;
+        }
+    }
+
     let messages = [
         {
             role: "system", content: `You are a marp slide creation assistant that creates a beautifully laid out slide based on a theme proposed by a user. The following is a template for a marp slide, please generate the final slide by combining the template with the theme requirements entered by the user.
@@ -171,6 +180,9 @@ Marp is a powerful Markdown presentation tool that enables you to create clean, 
 ---
 
 Thank You!
+
+
+${noteMessages}
 `
         },
         { role: "user", content: prompt},

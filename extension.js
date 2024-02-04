@@ -151,13 +151,24 @@ function activate(context) {
     //  register summaries command
     ///////////////////////////////////////////////////////////////////////////
     let disposableGenSlide = vscode.commands.registerCommand('coolwriter.genslide', async function () {
-
+        const withNoteLabel = "Writing with note"
         let cancel = false;
         const quickPick = vscode.window.createQuickPick();
         quickPick.placeholder = 'Please enter a slide prompt';
+        quickPick.canSelectMany = true; // 允许多选
+        quickPick.items = [
+            { label: withNoteLabel, alwaysShow: true }, // 特殊项用于确认选择
+        ];
+
         quickPick.onDidHide(() => cancel = true);
         quickPick.onDidAccept(async () => {
+            let withNote = quickPick.selectedItems.find(item => item.label == withNoteLabel) !== undefined;
             const value = quickPick.value;
+            let notes = []
+            if (withNote) {
+                notes = context.globalState.get('coolwriter.notes', []);
+            }
+
             let editor = vscode.window.activeTextEditor;
             if (editor) {
                 try {
@@ -165,7 +176,7 @@ function activate(context) {
                     let insertPosition = new vscode.Position(0, 0); // 设置插入位置为文档开始位置
 
                     quickPick.busy = true;
-                    const completion = await callOpenAIGenMarpSlide(value);
+                    const completion = await callOpenAIGenMarpSlide(value, notes);
                     for await (const chunk of completion) {
                         if (cancel) {
                             console.log('Operation cancelled by the user.');

@@ -9,6 +9,10 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - Rag support
 - Langchain support
 
+## [0.0.11]
+
+- Attach notes as context when create marp slide
+
 ## [0.0.10]
 
 - Attach notes as context when writing
