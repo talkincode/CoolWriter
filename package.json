@@ -23,7 +23,6 @@
     "onStartupFinished"
   ],
   "main": "./extension.js",
-  "browser": "./extension.js",
   "contributes": {
     "localizations": [
       {

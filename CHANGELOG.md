@@ -11,7 +11,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [0.0.13]
 
-- Web support
+- fix bug
 
 ## [0.0.11]
 
